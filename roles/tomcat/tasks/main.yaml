@@ -1,0 +1,55 @@
+---
+## Installing the Open Jdk 
+- name: Install Java 1.8
+  apt:
+      name: openjdk-8-jdk
+      state: present
+
+## Add user tomcat
+- name: add user tomcat
+  user:
+      name: tomcat
+      group: tomcat
+      create_home: no
+  become: True
+  become_method: sudo
+
+## Download specific tomcat from vars file
+- name: Download tomcat source
+  get_url:
+    url: "{{ download_tomcat }}"
+    dest: "{{ tomcat_location }}"
+
+## create folder installer for tomcat
+- name: Create folder tomcat
+  file:
+    path: /usr/share/tomcat
+    state: directory
+    owner: tomcat
+    group: tomcat
+
+## Extract tomcat source installer
+- name: Extract tomcat source
+  unarchive:
+    src: "{{ tomcat_location}}"
+    dest: /usr/share/tomcat
+    owner: tomcat
+    group: tomcat
+    remote_src: yes
+    extra_opts: "--strip-component=1"
+    creates: /usr/share/tomcat/bin
+
+## copy config service configuration to systemd
+- name: Copy service tomcat to systemd
+  template:
+    dest: templates/tomcat.service.j2
+    src: /etc/systemd/system/tomcat.service
+
+## Start tomcat service
+- name: Start and enable tomcat
+  service:
+    daemon_reload: yes
+    name: tomcat
+    state: started
+    enabled: yes
+  when: ansible_service_mgr == "systemd"
