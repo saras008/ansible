@@ -1,9 +1,0 @@
--
-    name: 'Update nameserver entry into resolv.conf file on localhost'
-    hosts: localhost
-    tasks:
-        -
-            name: 'Update nameserver entry into resolv.conf file'
-            lineinfile:
-                path: /etc/resolv.conf
-                line: 'nameserver {{ nameserver_ip }}'

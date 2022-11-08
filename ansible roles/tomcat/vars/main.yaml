@@ -1,2 +1,0 @@
-download_tomcat: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.73/bin/apache-tomcat-8.5.73.tar.gz
-download_location: /usr/share/tomcat/apache-tomcat-8.5.73.tar.gz

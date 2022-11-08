@@ -1,9 +1,0 @@
----
-root_group: root
-nginx_conf_path: /opt/nginx/conf
-nginx_conf_file_path: /opt/nginx/nginx.conf
-nginx_mime_file_path: /opt/nginx/mime.types
-nginx_pidfile: /var/run/nginx.pid
-nginx_vhost_path: /opt/nginx/conf
-nginx_default_vhost_path: /opt/nginx/conf/default.conf
-__nginx_user: "nginx"
