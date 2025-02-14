@@ -1,0 +1,26 @@
+---
+- name: Install Cachetool
+  hosts: cachetool
+  vars:
+    cachetool_version: "9.2.1" #change with desired version
+  tasks:
+    - name: Ensure download directory exists
+      file:
+        path: /tmp/download
+        state: directory
+
+    - name: Download Cachetool
+      get_url:
+        url: "https://gordalina.github.io/cachetool/downloads/cachetool-{{ cachetool_version }}.phar"
+        dest: "/tmp/download/cachetool-{{ cachetool_version }}.phar"
+        mode: '0755'
+
+    - name: Move Cachetool to /usr/local/bin
+      command: mv /tmp/download/cachetool-{{ cachetool_version }}.phar /usr/local/bin/cachetool.phar
+      args:
+        creates: /usr/local/bin/cachetool.phar
+
+    - name: Clean up download directory
+      file:
+        path: /tmp/download
+        state: absent
